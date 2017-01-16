@@ -1,0 +1,279 @@
+#/* $begin ncopy-ys */
+##################################################################
+# ncopy.ys - Copy a src block of len ints to dst.
+# Return the number of positive ints (>0) contained in src.
+#
+# Include your name and ID here.
+# Student Name: Li Zhige
+# Student ID: 5140219115
+#
+# Describe how and why you modified the baseline code.
+# 1, use instruction iaddl
+# 2, use loop unrolling in 16
+# 3, use jump table
+#
+#################################################################
+# Do not modify this portion
+# Function prologue.
+ncopy:	pushl %ebp		# Save old frame pointer
+	rrmovl %esp,%ebp	# Set up new frame pointer
+	pushl %esi		# Save callee-save regs
+	pushl %ebx
+	pushl %edi
+	mrmovl 8(%ebp),%ebx	# src
+	mrmovl 16(%ebp),%edx	# len
+	mrmovl 12(%ebp),%ecx	# dst
+
+##################################################################
+# You can modify this portion
+    # Loop header
+    xorl %eax,%eax		# count = 0;
+    xorl %edi, %edi
+    iaddl $-16, %edx
+    jl Rest
+
+Loop:
+    andl %edi, %edi
+    mrmovl 60(%ebx), %edi
+    rmmovl %edi, 60(%ecx)
+    jle L16
+    iaddl $1, %eax
+L16:
+    andl %edi, %edi
+    mrmovl 56(%ebx), %edi
+    rmmovl %edi, 56(%ecx)
+    jle L15
+    iaddl $1, %eax
+L15:
+    andl %edi, %edi
+    mrmovl 52(%ebx), %edi
+    rmmovl %edi, 52(%ecx)
+    jle L14
+    iaddl $1, %eax
+L14:
+    andl %edi, %edi
+    mrmovl 48(%ebx), %edi
+    rmmovl %edi, 48(%ecx)
+    jle L13
+    iaddl $1, %eax
+L13:
+    andl %edi, %edi
+    mrmovl 44(%ebx), %edi
+    rmmovl %edi, 44(%ecx)
+    jle L12
+    iaddl $1, %eax
+L12:
+    andl %edi, %edi
+    mrmovl 40(%ebx), %edi
+    rmmovl %edi, 40(%ecx)
+    jle L11
+    iaddl $1, %eax
+L11:
+    andl %edi, %edi
+    mrmovl 36(%ebx), %edi
+    rmmovl %edi, 36(%ecx)
+    jle L10
+    iaddl $1, %eax
+L10:
+    andl %edi, %edi
+    mrmovl 32(%ebx), %edi
+    rmmovl %edi, 32(%ecx)
+    jle L9
+    iaddl $1, %eax
+L9:
+    andl %edi, %edi
+    mrmovl 28(%ebx), %edi
+    rmmovl %edi, 28(%ecx)
+    jle L8
+    iaddl $1, %eax
+L8:
+    andl %edi, %edi
+    mrmovl 24(%ebx), %edi
+    rmmovl %edi, 24(%ecx)
+    jle L7
+    iaddl $1, %eax
+L7:
+    andl %edi, %edi
+    mrmovl 20(%ebx), %edi
+    rmmovl %edi, 20(%ecx)
+    jle L6
+    iaddl $1, %eax
+L6:
+    andl %edi, %edi
+    mrmovl 16(%ebx), %edi
+    rmmovl %edi, 16(%ecx)
+    jle L5
+    iaddl $1, %eax
+L5:
+    andl %edi, %edi
+    mrmovl 12(%ebx), %edi
+    rmmovl %edi, 12(%ecx)
+    jle L4
+    iaddl $1, %eax
+L4:
+    andl %edi, %edi
+    mrmovl 8(%ebx), %edi
+    rmmovl %edi, 8(%ecx)
+    jle L3
+    iaddl $1, %eax
+L3:
+    andl %edi, %edi
+    mrmovl 4(%ebx), %edi
+    rmmovl %edi, 4(%ecx)
+    jle L2
+    iaddl $1, %eax
+L2:
+    andl %edi, %edi
+    mrmovl 0(%ebx), %edi
+    rmmovl %edi, 0(%ecx)
+    jle L1
+    iaddl $1, %eax
+L1:
+
+    iaddl $64, %ebx
+    iaddl $64, %ecx
+    iaddl $-16, %edx
+    jge Loop
+Rest:
+    addl %edx, %edx
+    addl %edx, %edx
+    mrmovl Table(%edx), %edx
+    # hack for indirected jmp
+    pushl %edx
+    ret
+
+J16:
+    andl %edi, %edi
+    mrmovl 56(%ebx), %edi
+    rmmovl %edi, 56(%ecx)
+    jle J15
+    iaddl $1, %eax
+J15:
+    andl %edi, %edi
+    mrmovl 52(%ebx), %edi
+    rmmovl %edi, 52(%ecx)
+    jle J14
+    iaddl $1, %eax
+J14:
+    andl %edi, %edi
+    mrmovl 48(%ebx), %edi
+    rmmovl %edi, 48(%ecx)
+    jle J13
+    iaddl $1, %eax
+J13:
+    andl %edi, %edi
+    mrmovl 44(%ebx), %edi
+    rmmovl %edi, 44(%ecx)
+    jle J12
+    iaddl $1, %eax
+J12:
+    andl %edi, %edi
+    mrmovl 40(%ebx), %edi
+    rmmovl %edi, 40(%ecx)
+    jle J11
+    iaddl $1, %eax
+J11:
+    andl %edi, %edi
+    mrmovl 36(%ebx), %edi
+    rmmovl %edi, 36(%ecx)
+    jle J10
+    iaddl $1, %eax
+J10:
+    andl %edi, %edi
+    mrmovl 32(%ebx), %edi
+    rmmovl %edi, 32(%ecx)
+    jle J9
+    iaddl $1, %eax
+J9:
+    andl %edi, %edi
+    mrmovl 28(%ebx), %edi
+    rmmovl %edi, 28(%ecx)
+    jle J8
+    iaddl $1, %eax
+J8:
+    andl %edi, %edi
+    mrmovl 24(%ebx), %edi
+    rmmovl %edi, 24(%ecx)
+    jle J7
+    iaddl $1, %eax
+J7:
+    andl %edi, %edi
+    mrmovl 20(%ebx), %edi
+    rmmovl %edi, 20(%ecx)
+    jle J6
+    iaddl $1, %eax
+J6:
+    andl %edi, %edi
+    mrmovl 16(%ebx), %edi
+    rmmovl %edi, 16(%ecx)
+    jle J5
+    iaddl $1, %eax
+J5:
+    andl %edi, %edi
+    mrmovl 12(%ebx), %edi
+    rmmovl %edi, 12(%ecx)
+    jle J4
+    iaddl $1, %eax
+J4:
+    andl %edi, %edi
+    mrmovl 8(%ebx), %edi
+    rmmovl %edi, 8(%ecx)
+    jle J3
+    iaddl $1, %eax
+J3:
+    andl %edi, %edi
+    mrmovl 4(%ebx), %edi
+    rmmovl %edi, 4(%ecx)
+    jle J2
+    iaddl $1, %eax
+J2:
+    andl %edi, %edi
+    mrmovl 0(%ebx), %edi
+    rmmovl %edi, 0(%ecx)
+    jle J1
+    iaddl $1, %eax
+J1:
+    andl %edi, %edi
+    jle Final
+    iaddl $1, %eax
+Final:
+    popl %edi               # Restore callee-save registers
+    popl %ebx
+    leave
+    ret
+##################################################################
+# Do not modify the following section of code
+# Function epilogue.
+Done:
+	popl %edi               # Restore callee-save registers
+	popl %ebx
+	popl %esi
+	rrmovl %ebp, %esp
+	popl %ebp
+    leave
+	ret
+##################################################################
+# jump table
+.align 4
+    .long J1
+    .long J2
+    .long J3
+    .long J4
+    .long J5
+    .long J6
+    .long J7
+    .long J8
+    .long J9
+    .long J10
+    .long J11
+    .long J12
+    .long J13
+    .long J14
+    .long J15
+    .long J16
+
+Table:
+##################################################################
+# Keep the following label at the end of your function
+End:
+#/* $end ncopy-ys */

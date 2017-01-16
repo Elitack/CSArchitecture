@@ -1,0 +1,61 @@
+# Student Name: LiZhige
+# Student ID: 5140219115
+
+        .pos 0 
+init:   irmovl  Stack, %esp
+        irmovl  Stack, %ebp
+        irmovl  $3, %eax
+        pushl   %eax
+        irmovl  dest, %eax
+        pushl   %eax
+        irmovl  src, %eax
+        pushl   %eax
+        call copy_block
+        
+        halt
+
+.align  4
+src:
+        .long   0x00a
+        .long   0x0b0
+        .long   0xc00
+        
+dest:
+        .long   0x111
+        .long   0x222
+        .long   0x333
+        
+
+copy_block:
+        pushl   %ebp
+        rrmovl  %esp, %ebp
+        mrmovl  0x8(%ebp), %ebx
+        mrmovl  0xc(%ebp), %ecx
+        mrmovl  0x10(%ebp), %edx
+        xorl    %eax, %eax
+        
+Loop:
+        andl    %edx, %edx
+        je      End
+        mrmovl  (%ebx), %esi
+        rmmovl  %esi, (%ecx)
+        xorl    %esi, %eax        
+        
+        irmovl  $4, %edi
+        addl    %edi, %ebx
+        addl    %edi, %ecx
+        irmovl  $-1, %edi
+        addl    %edi, %edx
+        
+        jmp     Loop
+
+End:
+        rrmovl  %ebp, %esp
+        popl    %ebp
+        ret
+                
+        
+        .pos    0x100
+Stack:  
+                
+ 

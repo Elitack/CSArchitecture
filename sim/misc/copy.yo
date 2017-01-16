@@ -1,0 +1,60 @@
+                      | # Student Name: LiZhige
+                      | # Student ID: 5140219115
+                      | 
+  0x000:              |         .pos 0 
+  0x000: 30f400010000 | init:   irmovl  Stack, %esp
+  0x006: 30f500010000 |         irmovl  Stack, %ebp
+  0x00c: 30f003000000 |         irmovl  $3, %eax
+  0x012: a00f         |         pushl   %eax
+  0x014: 30f038000000 |         irmovl  dest, %eax
+  0x01a: a00f         |         pushl   %eax
+  0x01c: 30f02c000000 |         irmovl  src, %eax
+  0x022: a00f         |         pushl   %eax
+  0x024: 8044000000   |         call copy_block
+                      |         
+  0x029: 00           |         halt
+                      | 
+  0x02c:              | .align  4
+  0x02c:              | src:
+  0x02c: 0a000000     |         .long   0x00a
+  0x030: b0000000     |         .long   0x0b0
+  0x034: 000c0000     |         .long   0xc00
+                      |         
+  0x038:              | dest:
+  0x038: 11010000     |         .long   0x111
+  0x03c: 22020000     |         .long   0x222
+  0x040: 33030000     |         .long   0x333
+                      |         
+                      | 
+  0x044:              | copy_block:
+  0x044: a05f         |         pushl   %ebp
+  0x046: 2045         |         rrmovl  %esp, %ebp
+  0x048: 503508000000 |         mrmovl  0x8(%ebp), %ebx
+  0x04e: 50150c000000 |         mrmovl  0xc(%ebp), %ecx
+  0x054: 502510000000 |         mrmovl  0x10(%ebp), %edx
+  0x05a: 6300         |         xorl    %eax, %eax
+                      |         
+  0x05c:              | Loop:
+  0x05c: 6222         |         andl    %edx, %edx
+  0x05e: 7388000000   |         je      End
+  0x063: 506300000000 |         mrmovl  (%ebx), %esi
+  0x069: 406100000000 |         rmmovl  %esi, (%ecx)
+  0x06f: 6360         |         xorl    %esi, %eax        
+                      |         
+  0x071: 30f704000000 |         irmovl  $4, %edi
+  0x077: 6073         |         addl    %edi, %ebx
+  0x079: 6071         |         addl    %edi, %ecx
+  0x07b: 30f7ffffffff |         irmovl  $-1, %edi
+  0x081: 6072         |         addl    %edi, %edx
+                      |         
+  0x083: 705c000000   |         jmp     Loop
+                      | 
+  0x088:              | End:
+  0x088: 2054         |         rrmovl  %ebp, %esp
+  0x08a: b05f         |         popl    %ebp
+  0x08c: 90           |         ret
+                      |                 
+                      |         
+  0x100:              |         .pos    0x100
+  0x100:              | Stack:  
+                      |                 
