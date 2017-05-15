@@ -1,4 +1,4 @@
- Project2
+ ##Project2
  
  Handout files for students
 
@@ -12,15 +12,15 @@ This directory contains the files that you need for Project2.
 Files:
 
 
-Makefile		Use this to handin your solutions
++ Makefile---Use this to handin your solutions
 
-README			This file
++ README---This file
 
-archlab.{ps,pdf}	Lab writeup
++ archlab.{ps,pdf}---Lab writeup
 
-sim.tar			Archive of the Y86 tools in tar format
++ sim.tar---Archive of the Y86 tools in tar format
 
-simguide.{ps,pdf}	CS:APP Guide to Simulators document	
++ simguide.{ps,pdf}---CS:APP Guide to Simulators document	
 
 
 For more information please check the [report file](https://github.com/Elitack/CSArchitecture/blob/master/5140219115/5140219115-report.pdf).
